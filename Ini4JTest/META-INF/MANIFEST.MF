@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ini4JTest
+Bundle-SymbolicName: Ini4JTest
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: ini4jtest.Activator
+Require-Bundle: org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
