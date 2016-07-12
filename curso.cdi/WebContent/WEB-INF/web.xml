@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <listener>
+    <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+  </listener>
+  <servlet>
+    <description></description>
+    <display-name>ListaContas</display-name>
+    <servlet-name>ListaContas</servlet-name>
+    <servlet-class>br.com.caelum.fj91.banco.servlet.ListaContas</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListaContas</servlet-name>
+    <url-pattern>/lista</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AplicaTributos</display-name>
+    <servlet-name>AplicaTributos</servlet-name>
+    <servlet-class>br.com.caelum.fj91.banco.servlet.AplicaTributos</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AplicaTributos</servlet-name>
+    <url-pattern>/tributa</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>saca</servlet-name>
+    <servlet-class>br.com.caelum.fj91.banco.servlet.Sacar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>saca</servlet-name>
+    <url-pattern>/saca</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>deposita</servlet-name>
+    <servlet-class>br.com.caelum.fj91.banco.servlet.Depositar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>deposita</servlet-name>
+    <url-pattern>/deposita</url-pattern>
+  </servlet-mapping>
+</web-app>
