@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- Database connection settings -->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost/testehibernate</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password"/>
+
+        <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+		<property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>        
+		<property name="hibernate.c3p0.min_size">2</property>
+		<property name="hibernate.c3p0.max_size">10</property>
+		<property name="hibernate.c3p0.idle_test_period">120</property>
+		<property name="hibernate.c3p0.timeout">180</property>
+		
+		<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.use_structured_entries">true</property>
+
+        <property name="show_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
+        <mapping class="br.com.caelum.hibernate.modelo.Transacao"/>
+        <mapping class="br.com.caelum.hibernate.modelo.Conta"/>
+
+    </session-factory>
+
+</hibernate-configuration>
