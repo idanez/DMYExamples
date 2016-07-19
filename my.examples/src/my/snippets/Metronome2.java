@@ -2,6 +2,7 @@ package my.snippets;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 
@@ -10,6 +11,7 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -284,7 +286,7 @@ public class Metronome2 extends JPanel {
 		tempoChooser = new JSlider();
 
 		setBorder(javax.swing.BorderFactory.createTitledBorder("Metronome"));
-		setLayout(new java.awt.GridBagLayout());
+		setLayout(new GridBagLayout());
 
 		metronomeButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 		metronomeButton.setText("Beat");
@@ -301,7 +303,7 @@ public class Metronome2 extends JPanel {
 		gridBagConstraints.insets = new Insets(0, 4, 5, 0);
 		add(metronomeButton, gridBagConstraints);
 
-		soundChooser.setModel(new javax.swing.DefaultComboBoxModel(getSounds()));
+		soundChooser.setModel(new DefaultComboBoxModel(getSounds()));
 		soundChooser.setToolTipText("Select the sound to use");
 		soundChooser.addActionListener(new java.awt.event.ActionListener() {
 			@Override
