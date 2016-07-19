@@ -3,5 +3,16 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="lib/javaparser-1.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/box4j-1.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/htmlunit-2.9.jar"/>
+	<classpathentry kind="lib" path="lib/FormLayout.jar"/>
+	<classpathentry kind="lib" path="lib/jaudiotagger-2.0.4-20111207.115108-15.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/my.examples/doc/jaudiotagger-2.0.4-20111207.115108-15-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/entagged-audioformats-0.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
