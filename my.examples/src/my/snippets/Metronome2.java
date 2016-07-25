@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
  */
 public class Metronome2 extends JPanel {
 
-	static Logger log = Logger.getLogger(Metronome.class);
+	static Logger log = Logger.getLogger(MetronomeSequence.class);
 	private final int velocity = 127;
 	private Thread thread; // New thread each time the metronome is turned on
 	private final Runnable runnable = createRunnable();

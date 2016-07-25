@@ -17,7 +17,7 @@ import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Track;
 
-public class Metronome implements MetaEventListener {
+public class MetronomeSequence implements MetaEventListener {
 	private Sequencer sequencer;
 	private int bpm;
 	private Synthesizer synthesizer;
@@ -34,7 +34,7 @@ public class Metronome implements MetaEventListener {
 				bpm = 60;
 			}
 		}
-		new Metronome().start(bpm);
+		new MetronomeSequence().start(bpm);
 	}
 
 	public void start(final int bpm) {
@@ -44,7 +44,7 @@ public class Metronome implements MetaEventListener {
 			Sequence seq = createSequence();
 			startSequence(seq);
 		} catch (InvalidMidiDataException | MidiUnavailableException ex) {
-			Logger.getLogger(Metronome.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(MetronomeSequence.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
@@ -74,6 +74,29 @@ public class Metronome implements MetaEventListener {
 				}
 			}
 		}, controllersOfInterest);
+		
+	    int[] types = new int[128];
+	    for (int ii = 0; ii < 128; ii++) {
+	        types[ii] = ii;
+	    }
+	    
+	    ControllerEventListener cel = new ControllerEventListener() {
+
+            @Override
+            public void controlChange(ShortMessage event) {
+            	
+                int command = event.getCommand();
+                if (command == ShortMessage.NOTE_ON) {
+                    System.out.println("CEL - note on!");
+                } else if (command == ShortMessage.NOTE_OFF) {
+                    System.out.println("CEL - note off!");
+                } else {
+                    System.out.println("CEL - unknown: " + command);
+                }
+            }
+        };
+        sequencer.addControllerEventListener(cel, types);
+		
 	}
 
 	private Sequence createSequence() {
@@ -91,9 +114,9 @@ public class Metronome implements MetaEventListener {
 			addNoteEvent(track, 1, channel, note, velocity);
 			addNoteEvent(track, 2, channel, note, velocity);
 			// Teste de alteração de pitch
-			msg = new ShortMessage(ShortMessage.PITCH_BEND, 9, 80, 100);
-			evt = new MidiEvent(msg, 3);
-			track.add(evt);
+//			msg = new ShortMessage(ShortMessage.PITCH_BEND, 9, 80, 100);
+//			evt = new MidiEvent(msg, 3);
+//			track.add(evt);
 			addNoteEvent(track, 3, channel, note, velocity);
 			addNoteEvent(track, 4, channel, 38, velocity);
 
@@ -102,7 +125,7 @@ public class Metronome implements MetaEventListener {
 			track.add(evt);
 			return seq;
 		} catch (InvalidMidiDataException ex) {
-			Logger.getLogger(Metronome.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(MetronomeSequence.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
 		}
 	}
@@ -115,10 +138,15 @@ public class Metronome implements MetaEventListener {
 
 	private void addNoteEvent(final Track track, final long tick, final int channel, final int note, final int velocity)
 			throws InvalidMidiDataException {
-		addControlChange(track, tick);
+	    //addControlChange(track, tick);
 		ShortMessage message = new ShortMessage(ShortMessage.NOTE_ON, channel, note, velocity);
-		MidiEvent event = new MidiEvent(message, tick);
-		track.add(event);
+		//MidiEvent event = new MidiEvent(message, tick);
+		//track.add(event);
+		byte[] b = message.getMessage();
+		int l = (b == null ? 0 : b.length);
+		MetaMessage metaMessage = new MetaMessage((int)tick, b, l);
+        MidiEvent me2 = new MidiEvent(metaMessage, tick);
+        track.add(me2);
 	}
 
 	private void startSequence(final Sequence seq) throws InvalidMidiDataException {
@@ -130,6 +158,7 @@ public class Metronome implements MetaEventListener {
 	@Override
 	public void meta(final MetaMessage message) {
 		System.out.println("Type: " + message.getType());
+		
 		if (message.getType() != 47) { // 47 is end of track
 			return;
 		}
