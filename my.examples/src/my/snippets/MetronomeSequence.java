@@ -21,6 +21,7 @@ public class MetronomeSequence implements MetaEventListener {
 	private Sequencer sequencer;
 	private int bpm;
 	private Synthesizer synthesizer;
+	private int channel;
 
 	public static void main(final String[] args) throws Exception {
 		int bpm = 120;
@@ -74,29 +75,28 @@ public class MetronomeSequence implements MetaEventListener {
 				}
 			}
 		}, controllersOfInterest);
-		
-	    int[] types = new int[128];
-	    for (int ii = 0; ii < 128; ii++) {
-	        types[ii] = ii;
-	    }
-	    
-	    ControllerEventListener cel = new ControllerEventListener() {
 
-            @Override
-            public void controlChange(ShortMessage event) {
-            	
-                int command = event.getCommand();
-                if (command == ShortMessage.NOTE_ON) {
-                    System.out.println("CEL - note on!");
-                } else if (command == ShortMessage.NOTE_OFF) {
-                    System.out.println("CEL - note off!");
-                } else {
-                    System.out.println("CEL - unknown: " + command);
-                }
-            }
-        };
-        sequencer.addControllerEventListener(cel, types);
-		
+		int[] types = new int[128];
+		for (int ii = 0; ii < 128; ii++) {
+			types[ii] = ii;
+		}
+
+		ControllerEventListener cel = new ControllerEventListener() {
+
+			@Override
+			public void controlChange(ShortMessage event) {
+
+				int command = event.getCommand();
+				if (command == ShortMessage.NOTE_ON) {
+					System.out.println("CEL - note on!");
+				} else if (command == ShortMessage.NOTE_OFF) {
+					System.out.println("CEL - note off!");
+				} else {
+					System.out.println("CEL - unknown: " + command);
+				}
+			}
+		};
+		sequencer.addControllerEventListener(cel, types);
 	}
 
 	private Sequence createSequence() {
@@ -108,15 +108,15 @@ public class MetronomeSequence implements MetaEventListener {
 			track.add(evt);
 
 			int note = 37;
-			int channel = 9; // 9 reserved for percursion
+			channel = 9; // 9 reserved for percursion
 			int velocity = 127;
 
 			addNoteEvent(track, 1, channel, note, velocity);
 			addNoteEvent(track, 2, channel, note, velocity);
 			// Teste de alteração de pitch
-//			msg = new ShortMessage(ShortMessage.PITCH_BEND, 9, 80, 100);
-//			evt = new MidiEvent(msg, 3);
-//			track.add(evt);
+			// msg = new ShortMessage(ShortMessage.PITCH_BEND, 9, 80, 100);
+			// evt = new MidiEvent(msg, 3);
+			// track.add(evt);
 			addNoteEvent(track, 3, channel, note, velocity);
 			addNoteEvent(track, 4, channel, 38, velocity);
 
@@ -138,15 +138,15 @@ public class MetronomeSequence implements MetaEventListener {
 
 	private void addNoteEvent(final Track track, final long tick, final int channel, final int note, final int velocity)
 			throws InvalidMidiDataException {
-	    //addControlChange(track, tick);
+		// addControlChange(track, tick);
 		ShortMessage message = new ShortMessage(ShortMessage.NOTE_ON, channel, note, velocity);
-		//MidiEvent event = new MidiEvent(message, tick);
-		//track.add(event);
+		MidiEvent event = new MidiEvent(message, tick);
+		track.add(event);
 		byte[] b = message.getMessage();
 		int l = (b == null ? 0 : b.length);
-		MetaMessage metaMessage = new MetaMessage((int)tick, b, l);
-        MidiEvent me2 = new MidiEvent(metaMessage, tick);
-        track.add(me2);
+		MetaMessage metaMessage = new MetaMessage((int) tick, b, l);
+		MidiEvent me2 = new MidiEvent(metaMessage, tick);
+		track.add(me2);
 	}
 
 	private void startSequence(final Sequence seq) throws InvalidMidiDataException {
@@ -158,11 +158,35 @@ public class MetronomeSequence implements MetaEventListener {
 	@Override
 	public void meta(final MetaMessage message) {
 		System.out.println("Type: " + message.getType());
-		
+		try {
+			if (message.getType() == 3) {
+				sendPitchBendMessage(127);
+			} // else {
+				// sendPitchBendMessage(128);
+				// }
+		} catch (InvalidMidiDataException | MidiUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (message.getType() != 47) { // 47 is end of track
 			return;
 		}
 		doLoop();
+	}
+
+	private void sendPitchBendMessage(int pitchBendValue) throws InvalidMidiDataException, MidiUnavailableException {
+		long eventMoment;
+		ShortMessage pitchMessage = new ShortMessage();
+		pitchMessage.setMessage(ShortMessage.PITCH_BEND, channel, 3, pitchBendValue);
+		// synthesizer.getReceiver().send(pitchMessage, 1);
+		sequencer.getReceiver().send(pitchMessage, 1);
+		sequencer.getSequence().getTracks()[0].add(new MidiEvent(pitchMessage, 3));
+
+		// ShortMessage msg = new ShortMessage(ShortMessage.PITCH_BEND, 9, 1,
+		// (int) tick);
+		// MidiEvent evt = new MidiEvent(msg, tick);
+		// sequencer.getSequence().getTracks()[0].add(new Miodi)
+
 	}
 
 	private void doLoop() {
