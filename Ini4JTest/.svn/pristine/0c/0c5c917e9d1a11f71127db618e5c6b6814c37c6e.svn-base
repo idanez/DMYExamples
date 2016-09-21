@@ -2,8 +2,6 @@ package ini4jtest;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Set;
 
 import org.ini4j.Config;
@@ -15,17 +13,13 @@ public class IniReader {
 
 	public static void main(final String args[]) throws InvalidFileFormatException, IOException {
 
-		Date start = new Date();
-
 		File currDir = new File(".");
 		String path = currDir.getAbsolutePath();
 		path = path.substring(0, path.length() - 1);
-		path += "\\resource\\BigAppServer.ini";
+		path += "\\resource\\AppServer.ini";
 
 		final File input = new File(path);
-		Date startParser = new Date();
 		final Wini ini = new Wini(input);
-		Date endParser = new Date();
 
 		Config.getGlobal().setLowerCaseSection(true);
 		Config.getGlobal().setLowerCaseOption(true);
@@ -47,8 +41,7 @@ public class IniReader {
 		System.out.println("");
 		System.out.println(">>>>>> Lendo a seção General inteira: ");
 		System.out.println("");
-		// final Section section = ini.get("General");
-		final Section section = getCaseInsensitiveSection(ini, "GenERal");
+		final Section section = ini.get("General");
 		final Set<String> keySet = section.keySet();
 		for (final String string : keySet) {
 			System.out.println(string);
@@ -76,31 +69,6 @@ public class IniReader {
 
 		ini.store();
 
-		Date end = new Date();
-
-		String formated = calculateTime(start, end);
-		System.out.println("Tempo para processar tudo: " + formated);
-		System.out.println("Numero total de sessoes: " + sectionNames.size());
-		System.out.println("Tempo apenas do parser: " + calculateTime(startParser, endParser));
-
-	}
-
-	private static Section getCaseInsensitiveSection(final Wini ini, final String string) {
-		final Set<String> sectionNames = ini.keySet();
-		for (final String section : sectionNames) {
-			if (section.equalsIgnoreCase(string)) {
-				return ini.get(section);
-			}
-		}
-		return null;
-	}
-
-	private static String calculateTime(final Date begin, final Date end) {
-		long time = end.getTime() - begin.getTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("mm:ss.SSS");
-		Date loadTime = new Date(time);
-		String formated = sdf.format(loadTime);
-		return formated;
 	}
 
 }
