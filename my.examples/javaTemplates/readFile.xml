@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="" enabled="true" name="readfile"> ${:import(java.io.BufferedReader,  &#13;
+           java.io.FileNotFoundException,  &#13;
+           java.io.FileReader,  &#13;
+           java.io.IOException)}  &#13;
+ BufferedReader in = null;  &#13;
+ try {  &#13;
+    in = new BufferedReader(new FileReader(${fileName}));  &#13;
+    String line;  &#13;
+    while ((line = in.readLine()) != null) {  &#13;
+       ${process}  &#13;
+    }  &#13;
+ }  &#13;
+ catch (FileNotFoundException e) {  &#13;
+    logger.error(e) ;  &#13;
+ }  &#13;
+ catch (IOException e) {  &#13;
+    logger.error(e) ;  &#13;
+ } finally {  &#13;
+    if(in != null) in.close();  &#13;
+ }  &#13;
+ ${cursor} </template></templates>

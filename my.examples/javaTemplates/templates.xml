@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="Reads the user input using the java.util.Scanner" enabled="true" name="readuserInputWithScanner">Scanner reader = new Scanner(System.in); // Reading from System.in&#13;
+System.out.print("Enter: ");&#13;
+userInput = reader.next();&#13;
+reader.close();</template></templates>
