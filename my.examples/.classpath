@@ -14,5 +14,17 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/entagged-audioformats-0.15.jar"/>
+	<classpathentry kind="lib" path="lib/batik-1.8/batik-1.8.jar"/>
+	<classpathentry kind="lib" path="lib/batik-1.8/batik-rasterizer-1.8.jar"/>
+	<classpathentry kind="lib" path="lib/batik-1.8/batik-slideshow-1.8.jar"/>
+	<classpathentry kind="lib" path="lib/batik-1.8/batik-squiggle-1.8.jar"/>
+	<classpathentry kind="lib" path="lib/batik-1.8/batik-svgpp-1.8.jar"/>
+	<classpathentry kind="lib" path="lib/batik-1.8/batik-ttf2svg-1.8.jar"/>
+	<classpathentry kind="lib" path="lib/batik-1.8/lib/batik-awt-util-1.8.jar"/>
+	<classpathentry kind="lib" path="lib/selenium-java-2.46.0.jar"/>
+	<classpathentry kind="lib" path="lib/selenium-server-standalone-2.46.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
+	<referencedentry kind="lib" path="lib/batik-1.8/lib/batik-xml-1.8.jar" sourcepath="lib/batik-src-1.8.zip"/>
+	<referencedentry kind="lib" path="lib/batik-1.8/lib/batik-dom-1.8.jar" sourcepath="lib/batik-src-1.8.zip"/>
+	<referencedentry kind="lib" path="lib/batik-1.8/lib/batik-transcoder-1.8.jar" sourcepath="lib/batik-src-1.8.zip"/>
 </classpath>

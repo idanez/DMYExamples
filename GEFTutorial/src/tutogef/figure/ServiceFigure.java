@@ -27,8 +27,14 @@ public class ServiceFigure extends Figure {
 		add(labelEtage, ToolbarLayout.ALIGN_CENTER);
 		setConstraint(labelEtage, new Rectangle(5, 5, -1, -1));
 
-		/** Just for Fun :) **/
 		setForegroundColor(ColorConstants.black);
+		/** Just for Fun :) **/
+		// setForegroundColor(new Color(null, (new Double(Math.random() * 128)).intValue(),
+		// (new Double(Math.random() * 128)).intValue(), (new Double(Math.random() * 128)).intValue()));
+		// setBackgroundColor(new Color(null, (new Double(Math.random() * 128)).intValue() + 128,
+		// (new Double(Math.random() * 128)).intValue() + 128,
+		// (new Double(Math.random() * 128)).intValue() + 128));
+
 		setBorder(new LineBorder(1));
 		setOpaque(true);
 	}

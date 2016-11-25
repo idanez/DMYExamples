@@ -18,6 +18,9 @@ Require-Bundle: javax.inject;bundle-version="0.0.0",
  org.apache.commons.httpclient;bundle-version="3.1.0",
  org.apache.commons.io;bundle-version="2.2.0",
  org.apache.httpcomponents.httpcore;bundle-version="4.3.3",
- org.apache.httpcomponents.httpclient;bundle-version="4.3.6"
+ org.apache.httpcomponents.httpclient;bundle-version="4.3.6",
+ org.eclipse.ui.workbench,
+ org.eclipse.ui.views,
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
