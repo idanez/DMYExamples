@@ -18,19 +18,23 @@ public class KBAutoBuyOnBF {
 		// URL("http://www.kabum.com.br/cgi-local/site/produtos/descricao_blackfriday.cgi?codigo=78761");
 		String urlToBuy = "";
 		int tries = 0;
-		int maxTries = 500;
+		int maxTries = 5000;
 		while (urlToBuy.isEmpty() && tries < maxTries) {
 			tries += 1;
 			System.out.println("TENTATIVA: " + tries);
-			URL oracle = new URL(
-					"http://www.kabum.com.br/cgi-local/site/produtos/descricao_blackfriday.cgi?codigo=78399");
+			String urlBase = "http://www.kabum.com.br/cgi-local/site/produtos/descricao_blackfriday.cgi?codigo=";
+			String carregador = "65265";
+			String monitor = "78761";
+			String codigo = monitor; // <- Trocar pela string do codigo desejado
+			URL oracle = new URL(urlBase + codigo);
 			urlToBuy = readSite(oracle, tries, maxTries);
+			if (urlToBuy.equals("ESGOTOU")) {
+				System.out.println("ESGOTOU");
+				break;
+			}
 			if (!urlToBuy.isEmpty()) {
-				System.out.println("URL ENCONTRADA:");
-				System.out.println(urlToBuy);
-				System.out.println("ABRINDO BROWSER");
 				openUrlInBrowser(urlToBuy);
-				tries = maxTries;
+				break;
 			}
 		}
 	}
@@ -39,20 +43,17 @@ public class KBAutoBuyOnBF {
 		BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
 		String urlToBuy = "";
 		String inputLine;
-		StringBuffer buffer = new StringBuffer();
 		boolean add = false;
 		while ((inputLine = in.readLine()) != null) {
 			if (inputLine.contains("<div class=\"box_comprar-cm\">") || add) {
 				add = true;
-				buffer.append(inputLine);
-				buffer.append("\n");
 				urlToBuy = getUrlToBuy(inputLine);
 				if (!urlToBuy.isEmpty()) {
 					break;
 				}
 				if (inputLine.contains("ESGOTADO")) {
 					tries = maxTries;
-					System.out.println("ESGOTOU");
+					urlToBuy = "ESGOTOU";
 					break;
 				}
 				if (inputLine.contains("<div class=\"quantidades-cm\">")) {
@@ -66,6 +67,9 @@ public class KBAutoBuyOnBF {
 
 	private void openUrlInBrowser(final String urlToBuy) {
 		try {
+			System.out.println("URL ENCONTRADA:");
+			System.out.println(urlToBuy);
+			System.out.println("ABRINDO BROWSER");
 			Desktop.getDesktop().browse(new URL(urlToBuy).toURI());
 		} catch (Exception e) {
 			e.printStackTrace();
