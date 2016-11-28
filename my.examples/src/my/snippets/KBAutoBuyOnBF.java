@@ -26,8 +26,8 @@ public class KBAutoBuyOnBF {
 			String carregador = "65265";
 			String monitor = "78761";
 			String codigo = monitor; // <- Trocar pela string do codigo desejado
-			URL oracle = new URL(urlBase + codigo);
-			urlToBuy = readSite(oracle, tries, maxTries);
+			URL url = new URL(urlBase + codigo);
+			urlToBuy = readSite(url, tries, maxTries);
 			if (urlToBuy.equals("ESGOTOU")) {
 				System.out.println("ESGOTOU");
 				break;
@@ -39,14 +39,14 @@ public class KBAutoBuyOnBF {
 		}
 	}
 
-	private String readSite(final URL oracle, int tries, final int maxTries) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
+	private String readSite(final URL url, int tries, final int maxTries) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 		String urlToBuy = "";
 		String inputLine;
-		boolean add = false;
+		boolean boxBuyFound = false;
 		while ((inputLine = in.readLine()) != null) {
-			if (inputLine.contains("<div class=\"box_comprar-cm\">") || add) {
-				add = true;
+			if (inputLine.contains("<div class=\"box_comprar-cm\">") || boxBuyFound) {
+				boxBuyFound = true;
 				urlToBuy = getUrlToBuy(inputLine);
 				if (!urlToBuy.isEmpty()) {
 					break;
