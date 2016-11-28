@@ -9,8 +9,8 @@ import java.net.URL;
 public class KBAutoBuyOnBF {
 
 	public static void main(final String[] args) throws Exception {
-		KBAutoBuyOnBF black = new KBAutoBuyOnBF();
-		black.run();
+		KBAutoBuyOnBF kabumBlackFriday = new KBAutoBuyOnBF();
+		kabumBlackFriday.run();
 	}
 
 	private void run() throws IOException {
