@@ -59,6 +59,8 @@ public class KBAutoBuyOnBF {
 				if (inputLine.contains("<div class=\"quantidades-cm\">")) {
 					break;
 				}
+			} else if (inputLine.contains("<div class=\"quantidades-cm\">")) {
+				break;
 			}
 		}
 		in.close();
